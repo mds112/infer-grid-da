@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFER GRID | Data Inference Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="particle-container" id="particle-container">
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <header class="reveal">
+            <div class="logo-area">
+                <h1 class="racy-logo">INFER<span>GRID</span></h1>
+                <p class="status">SYSTEM STATUS: <span class="pulse">ACTIVE</span></p>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-mechanical">LOAD TELEMETRY</button>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <div class="card neon-cyan reveal">
+                <small>Aero Load</small>
+                <h2>842 <span>kg/f</span></h2>
+                <div class="progress-bar"><div class="fill" style="width: 84%;"></div></div>
+            </div>
+            <div class="card neon-red reveal">
+                <small>Thermal</small>
+                <h2>102<span>°C</span></h2>
+                <div class="progress-bar"><div class="fill" style="width: 70%;"></div></div>
+            </div>
+            <div class="card neon-purple reveal">
+                <small>Efficiency</small>
+                <h2>94<span>%</span></h2>
+                <div class="progress-bar"><div class="fill" style="width: 94%;"></div></div>
+            </div>
+            <div class="card neon-amber reveal">
+                <small>Structural Stress</small>
+                <h2>LOW</h2>
+                <div class="progress-bar"><div class="fill" style="width: 25%;"></div></div>
+            </div>
+
+            <section class="telemetry-view reveal">
+                <div class="section-header"><h3>LIVE INFERENCE STREAM</h3></div>
+                <div class="graph-placeholder"></div>
+            </section>
+
+            <aside class="ai-sidebar reveal">
+                <h3>ENGINEER LOG</h3>
+                <div class="log-entries">
+                    <div class="log-entry">Mechanical displacement: 6px. Neon bleed: Active.</div>
+                    <div class="log-entry">Vector stream: Horizontal/60Hz.</div>
+                </div>
+                <div class="input-area" style="margin-top: auto;">
+                    <textarea placeholder="Ask the Race Engineer..."></textarea>
+                    <button class="btn-mechanical-alt">EXECUTE QUERY</button>
+                </div>
+            </aside>
+        </main>
+
+        <section class="secondary-analysis">
+            <div class="text-block reveal">
+                <h3>Heuristic Overview</h3>
+                <p>System utilizing hardware-accelerated <strong>translate3d</strong> for all particle vectors. UI layer depth simulated via multi-stage box-shadow arrays and backdrop-blur filters.</p>
+            </div>
+
+            <div class="extra-grid">
+                <div class="card reveal"><small>Buffer</small><h3>14.2 GB/s</h3></div>
+                <div class="card reveal"><small>Drift</small><h3>-0.002ms</h3></div>
+                <div class="card reveal"><small>Packet</small><h3>0.00%</h3></div>
+            </div>
+
+            <div class="wide-graph reveal">
+                <div class="section-header"><h3>LATENCY DISTRIBUTION (TRACED)</h3></div>
+                <div class="graph-placeholder mini"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Toggling Scroll Reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+                else entry.target.classList.remove('visible');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Horizontal LERP Particles
+        const container = document.getElementById('particle-container');
+        let scrollPos = window.pageYOffset;
+        let targetSpeed = 1;
+        let currentSpeed = 1;
+
+        function updateParticles() {
+            const newScrollPos = window.pageYOffset;
+            const delta = Math.abs(newScrollPos - scrollPos);
+            if (delta > 0.1) { targetSpeed = Math.min(Math.max(delta * 0.5, 1), 20); }
+            else { targetSpeed = 1; }
+            
+            currentSpeed += (targetSpeed - currentSpeed) * 0.1;
+            container.style.setProperty('--scroll-speed', `${15 / currentSpeed}s`);
+            
+            scrollPos = newScrollPos;
+            requestAnimationFrame(updateParticles);
+        }
+        requestAnimationFrame(updateParticles);
+    </script>
+</body>
+</html>

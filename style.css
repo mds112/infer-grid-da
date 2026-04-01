@@ -1,0 +1,154 @@
+:root {
+    --bg-black: #050505;
+    --card-bg: rgba(15, 15, 15, 0.6);
+    /* High-Saturation Neon Pallet */
+    --neon-cyan: #00ffff; 
+    --neon-red: #ff003c; 
+    --neon-purple: #bc13fe;
+    --neon-amber: #ffb300;
+    --logo-red: #880000;
+    --logo-cyan-dim: #008899;
+}
+
+body {
+    background-color: var(--bg-black);
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
+    min-height: 220vh;
+    overflow-x: hidden;
+}
+
+/* --- REVEAL EFFECTS --- */
+.reveal {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+/* --- HORIZONTAL PARTICLES --- */
+.particle-container {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none; opacity: 0.87;
+}
+.particle {
+    position: absolute; width: 200px; height: 1px;
+    will-change: transform;
+    animation: flow var(--scroll-speed, 5s) linear infinite;
+}
+.particle:nth-child(3n) { background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent); }
+.particle:nth-child(3n+1) { background: linear-gradient(90deg, transparent, var(--neon-red), transparent); }
+.particle:nth-child(3n+2) { background: linear-gradient(90deg, transparent, var(--neon-purple), transparent); }
+
+/* Random Positioning for particles */
+.particle:nth-child(1) { top: 10%; left: 10%; } .particle:nth-child(2) { top: 25%; left: 50%; }
+.particle:nth-child(3) { top: 40%; left: 20%; } .particle:nth-child(4) { top: 55%; left: 80%; }
+.particle:nth-child(5) { top: 70%; left: 40%; } .particle:nth-child(6) { top: 85%; left: 70%; }
+
+@keyframes flow {
+    from { transform: translate3d(-300px, 0, 0); }
+    to { transform: translate3d(100vw, 0, 0); }
+}
+
+/* --- TACTILE GLASS CARDS --- */
+.card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem; border-radius: 12px; transition: all 0.3s ease;
+    backdrop-filter: blur(0px);
+}
+.card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05), 0 10px 40px rgba(0,0,0,0.7);
+}
+
+/* --- ULTRA-NEON MECHANICAL BUTTONS --- */
+.btn-mechanical, .btn-mechanical-alt {
+    background: #1a1a1a;
+    font-family: 'Audiowide', cursive;
+    cursor: pointer;
+    text-transform: uppercase;
+    padding: 14px 28px;
+    border-radius: 6px;
+    transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.05s ease;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
+    outline: none;
+    z-index: 2;
+}
+
+/* Cyan Button - Tri-Layer Glow */
+.btn-mechanical {
+    color: var(--neon-cyan);
+    box-shadow: 
+        0 6px 0 #008899, 
+        0 8px 15px rgba(0, 255, 255, 0.4),
+        0 0 30px rgba(0, 255, 255, 0.2);
+}
+.btn-mechanical:active {
+    transform: translateY(6px);
+    box-shadow: 0 0px 0 #008899, 0 0 10px rgba(0, 255, 255, 0.6);
+    background: #0a0a0a;
+}
+
+/* Red Button - Tri-Layer Glow */
+.btn-mechanical-alt {
+    color: var(--neon-red);
+    box-shadow: 
+        0 6px 0 #880000, 
+        0 8px 15px rgba(255, 0, 60, 0.4),
+        0 0 30px rgba(255, 0, 60, 0.2);
+    width: 100%;
+}
+.btn-mechanical-alt:active {
+    transform: translateY(6px);
+    box-shadow: 0 0px 0 #880000, 0 0 10px rgba(255, 0, 60, 0.6);
+    background: #0a0a0a;
+}
+
+/* Under-glow pseudo-element for surface bleed */
+.btn-mechanical::after, .btn-mechanical-alt::after {
+    content: ''; position: absolute; top: 50%; left: 50%; width: 130%; height: 130%;
+    transform: translate(-50%, -50%); opacity: 0.15; pointer-events: none;
+    background: radial-gradient(circle, currentColor 0%, transparent 70%); z-index: -1;
+}
+
+/* --- LOGO & HEADER --- */
+.container { position: relative; z-index: 1; padding: 2rem; max-width: 1400px; margin: 0 auto; }
+header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 1rem; margin-bottom: 2rem; }
+.racy-logo { font-family: 'Audiowide', cursive; font-size: 3.5rem; color: var(--logo-red); text-shadow: 0 0 10px rgba(136, 0, 0, 0.5); text-transform: uppercase; }
+.racy-logo span { color: var(--logo-cyan-dim); text-shadow: 0 0 10px rgba(0, 136, 153, 0.5); }
+
+/* --- DATA SLIDERS --- */
+.progress-bar { height: 8px; background: #000; border-radius: 4px; margin-top: 15px; border: 1px solid #111; overflow: hidden; }
+.fill { height: 100%; border-radius: 4px; }
+.neon-cyan h2 { color: var(--neon-cyan); }
+.neon-cyan .fill { background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
+.neon-red h2 { color: var(--neon-red); }
+.neon-red .fill { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
+.neon-purple h2 { color: var(--neon-purple); }
+.neon-purple .fill { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
+.neon-amber h2 { color: var(--neon-amber); }
+.neon-amber .fill { background: var(--neon-amber); box-shadow: 0 0 15px var(--neon-amber); }
+
+/* --- GRID STRUCTURE --- */
+.dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
+h2 { margin: 0.5rem 0; font-size: 2.2rem; font-family: 'Audiowide', cursive; }
+small { color: #666; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+.telemetry-view { grid-column: span 3; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; height: 400px; }
+.graph-placeholder { height: 85%; background: linear-gradient(rgba(25, 25, 25, 0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(25, 25, 25, 0.6) 1px, transparent 1px); background-size: 40px 40px; border-left: 1px solid #333; border-bottom: 1px solid #333; }
+.ai-sidebar { background: #000; padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; border: 1px solid #222; }
+textarea { width: 100%; height: 120px; background: #050505; color: #0f0; border: 1px solid #333; padding: 10px; resize: none; font-family: 'JetBrains Mono'; }
+
+.secondary-analysis { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; border-top: 1px solid #222; padding-top: 3rem; margin-bottom: 5rem; }
+.extra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.wide-graph { grid-column: span 2; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; }
+
+.pulse { color: #0f0; animation: blink 2s infinite; }
+@keyframes blink { 50% { opacity: 0.3; } }
