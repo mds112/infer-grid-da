@@ -152,3 +152,65 @@ textarea { width: 100%; height: 120px; background: #050505; color: #0f0; border:
 
 .pulse { color: #0f0; animation: blink 2s infinite; }
 @keyframes blink { 50% { opacity: 0.3; } }
+
+/* --- MOBILE OPTIMIZATIONS (Max-width: 768px) --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem; /* Less padding on small screens */
+    }
+
+    .racy-logo {
+        font-size: 2rem; /* Shrink logo for mobile */
+        text-align: center;
+        width: 100%;
+    }
+
+    header {
+        flex-direction: column; /* Stack logo and button vertically */
+        gap: 1.5rem;
+    }
+
+    /* Change 4 columns to 1 column */
+    .dashboard-grid {
+        grid-template-columns: 1fr; 
+        gap: 1rem;
+    }
+
+    /* Telemetry view takes full width and reduces height */
+    .telemetry-view {
+        grid-column: span 1;
+        height: 300px;
+    }
+
+    /* AI Sidebar stacks at the bottom */
+    .ai-sidebar {
+        height: auto;
+        margin-top: 1rem;
+    }
+
+    /* Secondary analysis (Heuristic Overview) stacks */
+    .secondary-analysis {
+        grid-template-columns: 1fr;
+        padding-top: 1.5rem;
+    }
+
+    .extra-grid {
+        grid-template-columns: 1fr; /* Stack the small buffer/drift cards */
+    }
+
+    .wide-graph {
+        grid-column: span 1;
+    }
+
+    /* Adjust Mechanical Buttons for Touch */
+    .btn-mechanical, .btn-mechanical-alt {
+        width: 100%; /* Full width buttons for easier tapping */
+        padding: 18px; /* Larger hit area for fingers */
+    }
+
+    /* Reduce particle intensity for mobile GPUs */
+    .particle {
+        width: 100px; /* Shorter trails */
+        opacity: 0.2;
+    }
+}
