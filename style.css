@@ -1,9 +1,9 @@
 :root {
-    /* Updated to the darkest possible purple hue */
-    --bg-black: #05010a; 
-    --card-bg: rgba(10, 2, 20, 0.6); 
+    /* The Purple Change */
+    --bg-black: #0a0510; 
+    --card-bg: rgba(41, 30, 41, 0.6); 
     
-    /* Original Neon Palette & Glows - UNTOUCHED */
+    /* Original Neon Palette & Glows */
     --neon-cyan: #00f2ff;
     --neon-red: #ff3131; 
     --neon-purple: #bc13fe;
@@ -14,8 +14,7 @@
 
 body {
     background-color: var(--bg-black);
-    /* Subtlest radial gradient to keep the "darkest hue" depth */
-    background-image: radial-gradient(circle at center, #0a0215 0%, #05010a 100%);
+    background-image: radial-gradient(circle at center, #150a25 0%, #0a0510 100%);
     color: white;
     font-family: 'JetBrains Mono', monospace;
     margin: 0;
@@ -89,7 +88,7 @@ header {
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* --- MECHANICAL BUTTONS --- */
+/* --- MECHANICAL BUTTONS (Restored Original Glow + Click) --- */
 .btn-mechanical, .btn-mechanical-alt {
     background: #1a1a1a; font-family: 'Audiowide', cursive; cursor: pointer; text-transform: uppercase;
     padding: 14px 28px; border-radius: 6px; transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.05s ease;
@@ -101,4 +100,59 @@ header {
 }
 .btn-mechanical:active {
     transform: translateY(6px);
-    box-shadow: 0 0px 0 #006b72,
+    box-shadow: 0 0px 0 #006b72, 0 2px 5px rgba(0, 0, 0, 0.8);
+    background: #0d0d0d;
+}
+.btn-mechanical-alt {
+    color: var(--neon-red);
+    box-shadow: 0 6px 0 #600000, 0 12px 20px rgba(0, 0, 0, 0.6);
+    width: 100%;
+}
+.btn-mechanical-alt:active {
+    transform: translateY(6px);
+    box-shadow: 0 0px 0 #600000, 0 2px 5px rgba(0, 0, 0, 0.8);
+    background: #0d0d0d;
+}
+
+/* --- PROGRESS BARS --- */
+.progress-bar { height: 8px; background: #000; border-radius: 4px; margin-top: 15px; border: 1px solid #111; }
+.fill { height: 100%; border-radius: 4px; }
+.neon-cyan h2 { color: var(--neon-cyan); }
+.neon-cyan .fill { background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
+.neon-red h2 { color: var(--neon-red); }
+.neon-red .fill { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
+.neon-purple h2 { color: var(--neon-purple); }
+.neon-purple .fill { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
+.neon-amber h2 { color: var(--neon-amber); }
+.neon-amber .fill { background: var(--neon-amber); box-shadow: 0 0 15px var(--neon-amber); }
+
+/* --- GRID STRUCTURE --- */
+.dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
+h2 { margin: 0.5rem 0; font-size: 2.2rem; font-family: 'Audiowide', cursive; }
+small { color: #666; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
+
+.telemetry-view { grid-column: span 3; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; height: 400px; }
+.graph-placeholder { height: 80%; background: linear-gradient(rgba(20, 20, 20, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(20, 20, 20, 0.5) 1px, transparent 1px); background-size: 30px 30px; border-left: 1px solid #333; border-bottom: 1px solid #333; }
+
+.ai-sidebar { background: #000; padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; border: 1px solid #222; }
+textarea { width: 100%; height: 150px; background: #050505; color: white; border: 1px solid #333; padding: 10px; resize: none; outline: none; }
+
+.secondary-analysis { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; border-top: 1px solid #222; padding-top: 3rem; margin-bottom: 5rem; }
+.extra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.wide-graph { grid-column: span 2; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; }
+
+.pulse { color: #0f0; animation: blink 2s infinite; }
+@keyframes blink { 50% { opacity: 0.3; } }
+
+/* --- MOBILE --- */
+@media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .racy-logo { font-size: 2rem; text-align: center; }
+    header { flex-direction: column; gap: 1.5rem; }
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .telemetry-view { grid-column: span 1; height: 300px; }
+    .secondary-analysis { grid-template-columns: 1fr; }
+    .extra-grid { grid-template-columns: 1fr; }
+    .wide-graph { grid-column: span 1; }
+    .btn-mechanical, .btn-mechanical-alt { width: 100%; }
+}
