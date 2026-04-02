@@ -1,9 +1,9 @@
 :root {
-    /* The Purple Change */
-    --bg-black: #0a0510; 
-    --card-bg: rgba(25, 10, 35, 0.6); 
+    /* Updated to the darkest possible purple hue */
+    --bg-black: #05010a; 
+    --card-bg: rgba(10, 2, 20, 0.6); 
     
-    /* Original Neon Palette & Glows */
+    /* Original Neon Palette & Glows - UNTOUCHED */
     --neon-cyan: #00f2ff;
     --neon-red: #ff3131; 
     --neon-purple: #bc13fe;
@@ -14,7 +14,8 @@
 
 body {
     background-color: var(--bg-black);
-    background-image: radial-gradient(circle at center, #150a25 0%, #0a0510 100%);
+    /* Subtlest radial gradient to keep the "darkest hue" depth */
+    background-image: radial-gradient(circle at center, #0a0215 0%, #05010a 100%);
     color: white;
     font-family: 'JetBrains Mono', monospace;
     margin: 0;
@@ -88,7 +89,7 @@ header {
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* --- MECHANICAL BUTTONS (Restored Original Glow + Click) --- */
+/* --- MECHANICAL BUTTONS --- */
 .btn-mechanical, .btn-mechanical-alt {
     background: #1a1a1a; font-family: 'Audiowide', cursive; cursor: pointer; text-transform: uppercase;
     padding: 14px 28px; border-radius: 6px; transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.05s ease;
@@ -100,25 +101,4 @@ header {
 }
 .btn-mechanical:active {
     transform: translateY(6px);
-    box-shadow: 0 0px 0 #006b72, 0 2px 5px rgba(0, 0, 0, 0.8);
-    background: #0d0d0d;
-}
-.btn-mechanical-alt {
-    color: var(--neon-red);
-    box-shadow: 0 6px 0 #600000, 0 12px 20px rgba(0, 0, 0, 0.6);
-    width: 100%;
-}
-.btn-mechanical-alt:active {
-    transform: translateY(6px);
-    box-shadow: 0 0px 0 #600000, 0 2px 5px rgba(0, 0, 0, 0.8);
-    background: #0d0d0d;
-}
-
-/* --- PROGRESS BARS --- */
-.progress-bar { height: 8px; background: #000; border-radius: 4px; margin-top: 15px; border: 1px solid #111; }
-.fill { height: 100%; border-radius: 4px; }
-.neon-cyan h2 { color: var(--neon-cyan); }
-.neon-cyan .fill { background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
-.neon-red h2 { color: var(--neon-red); }
-.neon-red .fill { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
-.neon-purple h2 {
+    box-shadow: 0 0px 0 #006b72,
