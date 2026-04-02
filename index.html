@@ -9,12 +9,8 @@
 </head>
 <body>
 
-    <div class="particle-container" id="particle-container">
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
-    </div>
+    <!-- Shooting star canvas replaces the old .particle-container -->
+    <canvas id="shooting-star-canvas"></canvas>
 
     <div class="container">
         <header class="reveal">
@@ -87,35 +83,122 @@
     </div>
 
     <script>
-        // Toggling Scroll Reveal
+        // ── Scroll Reveal ──────────────────────────────────────────────
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('visible');
                 else entry.target.classList.remove('visible');
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // Horizontal LERP Particles
-        const container = document.getElementById('particle-container');
-        let scrollPos = window.pageYOffset;
-        let targetSpeed = 1;
-        let currentSpeed = 1;
+        // ── Shooting Star Canvas ───────────────────────────────────────
+        (function () {
+            const canvas = document.getElementById('shooting-star-canvas');
+            const ctx = canvas.getContext('2d');
 
-        function updateParticles() {
-            const newScrollPos = window.pageYOffset;
-            const delta = Math.abs(newScrollPos - scrollPos);
-            if (delta > 0.1) { targetSpeed = Math.min(Math.max(delta * 0.5, 1), 20); }
-            else { targetSpeed = 1; }
-            
-            currentSpeed += (targetSpeed - currentSpeed) * 0.1;
-            container.style.setProperty('--scroll-speed', `${15 / currentSpeed}s`);
-            
-            scrollPos = newScrollPos;
-            requestAnimationFrame(updateParticles);
-        }
-        requestAnimationFrame(updateParticles);
+            const COLORS = [
+                { stroke: '#00f2ff', shadow: '#00f2ff' },
+                { stroke: '#ff3131', shadow: '#ff3131' },
+                { stroke: '#bc13fe', shadow: '#bc13fe' },
+                { stroke: '#00ff88', shadow: '#00ff88' },
+                { stroke: '#ffb300', shadow: '#ffb300' },
+            ];
+
+            let W, H;
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            // Scroll speed tracking
+            let scrollSpeed = 0;
+            let lastScrollY = window.scrollY;
+            let lastScrollTime = performance.now();
+            let smoothMultiplier = 1;
+
+            window.addEventListener('scroll', () => {
+                const now = performance.now();
+                const dy = Math.abs(window.scrollY - lastScrollY);
+                const dt = Math.max(1, now - lastScrollTime);
+                scrollSpeed = (dy / dt) * 16;
+                lastScrollY = window.scrollY;
+                lastScrollTime = now;
+            }, { passive: true });
+
+            function makeStar() {
+                const col = COLORS[Math.floor(Math.random() * COLORS.length)];
+                return {
+                    x: -Math.random() * 300,
+                    y: Math.random() * H,
+                    len: 80 + Math.random() * 160,
+                    speed: 2.5 + Math.random() * 3,
+                    alpha: 0.5 + Math.random() * 0.5,
+                    width: 0.5 + Math.random() * 1.2,
+                    col,
+                    angle: (Math.random() - 0.5) * 0.06,
+                };
+            }
+
+            const stars = Array.from({ length: 55 }, makeStar);
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, W, H);
+
+                // Smoothly decay scroll speed and lerp multiplier
+                scrollSpeed *= 0.92;
+                const targetMultiplier = Math.max(1, 1 + scrollSpeed * 0.18);
+                smoothMultiplier += (targetMultiplier - smoothMultiplier) * 0.04;
+
+                for (const s of stars) {
+                    const spd = s.speed * smoothMultiplier;
+                    s.x += spd;
+                    s.y += Math.sin(s.angle) * spd * 0.3;
+
+                    // Reset when off screen
+                    if (s.x > W + 50) {
+                        s.x = -s.len - Math.random() * 200;
+                        s.y = Math.random() * H;
+                    }
+
+                    // Gradient tail
+                    const tailX = s.x - s.len;
+                    const grad = ctx.createLinearGradient(tailX, s.y, s.x, s.y);
+                    grad.addColorStop(0, 'transparent');
+                    grad.addColorStop(0.6, s.col.stroke + '44');
+                    grad.addColorStop(1, s.col.stroke);
+
+                    ctx.save();
+
+                    // Main streak
+                    ctx.globalAlpha = s.alpha;
+                    ctx.shadowColor = s.col.shadow;
+                    ctx.shadowBlur = 10 + smoothMultiplier * 4;
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = s.width * Math.min(2, smoothMultiplier * 0.6 + 0.7);
+                    ctx.beginPath();
+                    ctx.moveTo(tailX, s.y);
+                    ctx.lineTo(s.x, s.y);
+                    ctx.stroke();
+
+                    // Bright white hot-tip
+                    ctx.shadowBlur = 18 + smoothMultiplier * 6;
+                    ctx.lineWidth = s.width * 0.35;
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.globalAlpha = s.alpha * 0.5;
+                    ctx.beginPath();
+                    ctx.moveTo(s.x - s.len * 0.15, s.y);
+                    ctx.lineTo(s.x, s.y);
+                    ctx.stroke();
+
+                    ctx.restore();
+                }
+            }
+            animate();
+        })();
     </script>
 </body>
 </html>
