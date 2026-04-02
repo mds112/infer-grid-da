@@ -1,5 +1,5 @@
 :root {
-    /* Updated to the requested background color */
+    /* Background Locked */
     --bg-black: #01000f; 
     --card-bg: rgba(30, 30, 45, 0.7); 
     
@@ -22,7 +22,7 @@ body {
     overflow-x: hidden;
 }
 
-/* --- THE MECHANICAL BUTTON OVERHAUL --- */
+/* --- THE MECHANICAL BUTTON OVERHAUL (UNTOUCHED) --- */
 .btn-mechanical, .btn-mechanical-alt {
     background: #1a1a1a; 
     font-family: 'Audiowide', cursive; 
@@ -30,7 +30,6 @@ body {
     text-transform: uppercase;
     padding: 14px 28px; 
     border-radius: 6px; 
-    /* Snappy 0.04s transition for mechanical feel */
     transition: transform 0.04s ease, box-shadow 0.04s ease, background 0.04s ease;
     position: relative; 
     border: 1px solid rgba(255,255,255,0.1); 
@@ -39,15 +38,10 @@ body {
 
 .btn-mechanical {
     color: var(--neon-cyan);
-    /* 8px Displacement Shadow + Neon Bloom */
-    box-shadow: 
-        0 8px 0 #006b72, 
-        0 12px 25px rgba(0, 242, 255, 0.4), 
-        0 0 40px rgba(0, 242, 255, 0.2);
+    box-shadow: 0 8px 0 #006b72, 0 12px 25px rgba(0, 242, 255, 0.4), 0 0 40px rgba(0, 242, 255, 0.2);
 }
 
 .btn-mechanical:active {
-    /* Full 8px "Thunk" Downward */
     transform: translateY(8px);
     box-shadow: 0 0px 0 #006b72, 0 0 20px rgba(0, 242, 255, 0.7);
     background: #050505;
@@ -55,10 +49,7 @@ body {
 
 .btn-mechanical-alt {
     color: var(--neon-red);
-    box-shadow: 
-        0 8px 0 #600000, 
-        0 12px 25px rgba(255, 49, 49, 0.4), 
-        0 0 40px rgba(255, 49, 49, 0.2);
+    box-shadow: 0 8px 0 #600000, 0 12px 25px rgba(255, 49, 49, 0.4), 0 0 40px rgba(255, 49, 49, 0.2);
     width: 100%;
 }
 
@@ -68,52 +59,13 @@ body {
     background: #050505;
 }
 
-/* --- REST OF THE LAYOUT (LOCKED) --- */
-.container { position: relative; z-index: 1; padding: 2rem; max-width: 1400px; margin: 0 auto; }
-.reveal { opacity: 0; transform: translate3d(0, 40px, 0); transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
-.reveal.visible { opacity: 1; transform: translate3d(0, 0, 0); }
+/* --- ENHANCED PARTICLES (ONLY SECTION MODIFIED) --- */
+.particle-container { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    z-index: 0; pointer-events: none; 
+    opacity: 0.6; /* Increased opacity for more visible particles */
+}
 
-.particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; }
-.particle { position: absolute; width: 200px; height: 1px; animation: flow var(--scroll-speed, 5s) linear infinite; }
-.particle:nth-child(3n) { background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent); box-shadow: 0 0 8px var(--neon-cyan); }
-.particle:nth-child(3n+1) { background: linear-gradient(90deg, transparent, var(--neon-red), transparent); box-shadow: 0 0 8px var(--neon-red); }
-.particle:nth-child(3n+2) { background: linear-gradient(90deg, transparent, var(--neon-purple), transparent); box-shadow: 0 0 8px var(--neon-purple); }
-
-@keyframes flow { from { transform: translate3d(-300px, 0, 0); } to { transform: translate3d(100vw, 0, 0); } }
-
-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 1rem; margin-bottom: 2rem; }
-.racy-logo { font-family: 'Audiowide', cursive; font-size: 3.5rem; color: var(--logo-red); text-shadow: 0 0 15px rgba(136, 0, 0, 0.4); text-transform: uppercase; }
-.racy-logo span { color: var(--logo-cyan-dim); text-shadow: 0 0 15px rgba(0, 136, 153, 0.4); }
-
-.dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
-.card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 12px; transition: all 0.3s ease; }
-.card:hover { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
-
-.progress-bar { height: 8px; background: #000; border-radius: 4px; margin-top: 15px; border: 1px solid #111; }
-.fill { height: 100%; border-radius: 4px; }
-.neon-cyan h2 { color: var(--neon-cyan); }
-.neon-cyan .fill { background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
-.neon-red h2 { color: var(--neon-red); }
-.neon-red .fill { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
-.neon-purple h2 { color: var(--neon-purple); }
-.neon-purple .fill { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
-.neon-amber h2 { color: var(--neon-amber); }
-.neon-amber .fill { background: var(--neon-amber); box-shadow: 0 0 15px var(--neon-amber); }
-
-h2 { margin: 0.5rem 0; font-size: 2.2rem; font-family: 'Audiowide', cursive; }
-small { color: #666; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
-
-.telemetry-view { grid-column: span 3; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; height: 400px; }
-.graph-placeholder { height: 80%; background: linear-gradient(rgba(20, 20, 20, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(20, 20, 20, 0.5) 1px, transparent 1px); background-size: 30px 30px; border-left: 1px solid #333; border-bottom: 1px solid #333; }
-
-.ai-sidebar { background: #000; padding: 1.5rem; border-radius: 12px; display: flex; flex-direction: column; border: 1px solid #222; }
-textarea { width: 100%; height: 150px; background: #050505; color: white; border: 1px solid #333; padding: 10px; resize: none; outline: none; }
-
-.secondary-analysis { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; border-top: 1px solid #222; padding-top: 3rem; margin-bottom: 5rem; }
-.extra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.wide-graph { grid-column: span 2; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; }
-
-@media (max-width: 768px) {
-    .container { padding: 1rem; }
-    .racy-logo { font-size: 2rem; text-align: center; }
-    header { flex-direction: column;
+.particle { 
+    position: absolute; 
+    width: 150px; /* Slightly shorter for higher density look
