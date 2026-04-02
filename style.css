@@ -1,5 +1,5 @@
 :root {
-    /* Only this value has been changed */
+    /* Your requested background color */
     --bg-black: #0c0c17; 
     
     --card-bg: rgba(25, 10, 35, 0.7); 
@@ -76,4 +76,16 @@ header {
 /* --- CARDS --- */
 .card {
     background: var(--card-bg);
-    border: 1px solid rgba(255, 255,
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem; border-radius: 12px; transition: all 0.3s ease;
+}
+.card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* --- MECHANICAL BUTTONS --- */
+.btn-mechanical, .btn-mechanical-alt {
+    background: #1a1a1a; font-family: 'Audiowide', cursive; cursor: pointer; text-transform: uppercase;
