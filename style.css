@@ -1,9 +1,6 @@
 :root {
-    /* Background Locked to #01000f */
     --bg-black: #01000f; 
     --card-bg: rgba(30, 30, 45, 0.7); 
-    
-    /* Original Neon Palette */
     --neon-cyan: #00f2ff;
     --neon-red: #ff3131; 
     --neon-purple: #bc13fe;
@@ -20,6 +17,17 @@ body {
     margin: 0;
     min-height: 200vh;
     overflow-x: hidden;
+}
+
+/* --- SHOOTING STAR CANVAS --- */
+#shooting-star-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
 }
 
 /* --- THE MECHANICAL BUTTON OVERHAUL (LOCKED) --- */
@@ -64,21 +72,6 @@ body {
     box-shadow: 0 0px 0 #600000, 0 0 20px rgba(255, 49, 49, 0.7);
     background: #050505;
 }
-
-/* --- PARTICLES (LOCKED ORIGINAL VALUES) --- */
-.particle-container { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-    z-index: 0; pointer-events: none; opacity: 0.35; 
-}
-.particle { 
-    position: absolute; width: 200px; height: 1px; 
-    animation: flow var(--scroll-speed, 5s) linear infinite; 
-}
-.particle:nth-child(3n) { background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent); box-shadow: 0 0 8px var(--neon-cyan); }
-.particle:nth-child(3n+1) { background: linear-gradient(90deg, transparent, var(--neon-red), transparent); box-shadow: 0 0 8px var(--neon-red); }
-.particle:nth-child(3n+2) { background: linear-gradient(90deg, transparent, var(--neon-purple), transparent); box-shadow: 0 0 8px var(--neon-purple); }
-
-@keyframes flow { from { transform: translate3d(-300px, 0, 0); } to { transform: translate3d(100vw, 0, 0); } }
 
 /* --- REST OF THE LAYOUT (LOCKED) --- */
 .container { position: relative; z-index: 1; padding: 2rem; max-width: 1400px; margin: 0 auto; }
