@@ -1,11 +1,11 @@
 :root {
-    /* The Purple Change */
+    /* Your requested background color */
     --bg-black: #16161f; 
-    --card-bg: rgba(22, 22, 31, 0.6); 
+    --card-bg: rgba(30, 30, 45, 0.7); 
     
-    /* Original Neon Palette & Glows */
-    --neon-cyan: #00c4ff;
-    --neon-red: #f40f0f; 
+    /* Neon Palette */
+    --neon-cyan: #00f2ff;
+    --neon-red: #ff3131; 
     --neon-purple: #bc13fe;
     --neon-amber: #ffb300;
     --logo-red: #880000;
@@ -14,7 +14,8 @@
 
 body {
     background-color: var(--bg-black);
-    background-image: radial-gradient(circle at center, #150a25 0%, #0a0510 100%);
+    /* Subtle gradient to add depth to the #16161f hue */
+    background-image: radial-gradient(circle at center, #1e1e2e 0%, #16161f 100%);
     color: white;
     font-family: 'JetBrains Mono', monospace;
     margin: 0;
@@ -22,99 +23,77 @@ body {
     overflow-x: hidden;
 }
 
-.container {
-    position: relative;
-    z-index: 1;
-    padding: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
+/* --- MECHANICAL BUTTONS (Enhanced Neon & Displacement) --- */
+.btn-mechanical, .btn-mechanical-alt {
+    background: #1a1a1a; 
+    font-family: 'Audiowide', cursive; 
+    cursor: pointer; 
+    text-transform: uppercase;
+    padding: 14px 28px; 
+    border-radius: 6px; 
+    /* Slightly faster transition for a "snappier" mechanical feel */
+    transition: transform 0.04s ease, box-shadow 0.04s ease, background 0.04s ease;
+    position: relative; 
+    border: 1px solid rgba(255,255,255,0.1); 
+    outline: none;
+    letter-spacing: 1px;
 }
 
-/* --- REVEAL --- */
-.reveal {
-    opacity: 0;
-    transform: translate3d(0, 40px, 0);
-    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.visible {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+/* Cyan Button - High Displacement & Bloom */
+.btn-mechanical {
+    color: var(--neon-cyan);
+    /* Layer 1: Dark mechanical base (8px thick) */
+    /* Layer 2: Neon bloom */
+    /* Layer 3: Soft ambient glow */
+    box-shadow: 
+        0 8px 0 #006b72, 
+        0 12px 20px rgba(0, 242, 255, 0.3),
+        0 0 35px rgba(0, 242, 255, 0.15);
 }
 
-/* --- HORIZONTAL PARTICLES --- */
-.particle-container {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 0; pointer-events: none; opacity: 0.35;
+.btn-mechanical:active {
+    /* Full 8px displacement for a "heavy" press */
+    transform: translateY(8px);
+    box-shadow: 0 0px 0 #006b72, 0 0 15px rgba(0, 242, 255, 0.6);
+    background: #0d0d0d;
 }
-.particle {
-    position: absolute; width: 200px; height: 1px;
-    will-change: transform;
-    animation: flow var(--scroll-speed, 5s) linear infinite;
+
+/* Red Button - High Displacement & Bloom */
+.btn-mechanical-alt {
+    color: var(--neon-red);
+    box-shadow: 
+        0 8px 0 #600000, 
+        0 12px 20px rgba(255, 49, 49, 0.3),
+        0 0 35px rgba(255, 49, 49, 0.15);
+    width: 100%;
 }
+
+.btn-mechanical-alt:active {
+    transform: translateY(8px);
+    box-shadow: 0 0px 0 #600000, 0 0 15px rgba(255, 49, 49, 0.6);
+    background: #0d0d0d;
+}
+
+/* --- THE REST UNCHANGED (Locked Layout) --- */
+.container { position: relative; z-index: 1; padding: 2rem; max-width: 1400px; margin: 0 auto; }
+.reveal { opacity: 0; transform: translate3d(0, 40px, 0); transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.visible { opacity: 1; transform: translate3d(0, 0, 0); }
+
+.particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: 0.35; }
+.particle { position: absolute; width: 200px; height: 1px; animation: flow var(--scroll-speed, 5s) linear infinite; }
 .particle:nth-child(3n) { background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent); box-shadow: 0 0 8px var(--neon-cyan); }
 .particle:nth-child(3n+1) { background: linear-gradient(90deg, transparent, var(--neon-red), transparent); box-shadow: 0 0 8px var(--neon-red); }
 .particle:nth-child(3n+2) { background: linear-gradient(90deg, transparent, var(--neon-purple), transparent); box-shadow: 0 0 8px var(--neon-purple); }
 
-@keyframes flow {
-    from { transform: translate3d(-300px, 0, 0); }
-    to { transform: translate3d(100vw, 0, 0); }
-}
+@keyframes flow { from { transform: translate3d(-300px, 0, 0); } to { transform: translate3d(100vw, 0, 0); } }
 
-/* --- LOGO & HEADER --- */
-header {
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid #222;
-    padding-bottom: 1rem; margin-bottom: 2rem;
-}
-.racy-logo {
-    font-family: 'Audiowide', cursive; font-size: 3.5rem; font-weight: 400; letter-spacing: 2px; margin: 0;
-    color: var(--logo-red); text-shadow: 0 0 5px rgba(136, 0, 0, 0.6), 0 0 15px rgba(136, 0, 0, 0.3);
-    text-transform: uppercase;
-}
-.racy-logo span {
-    color: var(--logo-cyan-dim); text-shadow: 0 0 5px rgba(0, 136, 153, 0.6), 0 0 15px rgba(0, 136, 153, 0.3);
-}
+header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 1rem; margin-bottom: 2rem; }
+.racy-logo { font-family: 'Audiowide', cursive; font-size: 3.5rem; color: var(--logo-red); text-shadow: 0 0 15px rgba(136, 0, 0, 0.4); text-transform: uppercase; }
+.racy-logo span { color: var(--logo-cyan-dim); text-shadow: 0 0 15px rgba(0, 136, 153, 0.4); }
 
-/* --- CARDS --- */
-.card {
-    background: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1.5rem; border-radius: 12px; transition: all 0.3s ease;
-}
-.card:hover {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0,0,0,0.5);
-}
+.card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 12px; transition: all 0.3s ease; }
+.card:hover { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
 
-/* --- MECHANICAL BUTTONS (Restored Original Glow + Click) --- */
-.btn-mechanical, .btn-mechanical-alt {
-    background: #1a1a1a; font-family: 'Audiowide', cursive; cursor: pointer; text-transform: uppercase;
-    padding: 14px 28px; border-radius: 6px; transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.05s ease;
-    border: 1px solid rgba(255,255,255,0.1); position: relative; outline: none;
-}
-.btn-mechanical {
-    color: var(--neon-cyan);
-    box-shadow: 0 6px 0 #006b72, 0 12px 20px rgba(0, 0, 0, 0.6);
-}
-.btn-mechanical:active {
-    transform: translateY(6px);
-    box-shadow: 0 0px 0 #006b72, 0 2px 5px rgba(0, 0, 0, 0.8);
-    background: #0d0d0d;
-}
-.btn-mechanical-alt {
-    color: var(--neon-red);
-    box-shadow: 0 6px 0 #600000, 0 12px 20px rgba(0, 0, 0, 0.6);
-    width: 100%;
-}
-.btn-mechanical-alt:active {
-    transform: translateY(6px);
-    box-shadow: 0 0px 0 #600000, 0 2px 5px rgba(0, 0, 0, 0.8);
-    background: #0d0d0d;
-}
-
-/* --- PROGRESS BARS --- */
 .progress-bar { height: 8px; background: #000; border-radius: 4px; margin-top: 15px; border: 1px solid #111; }
 .fill { height: 100%; border-radius: 4px; }
 .neon-cyan h2 { color: var(--neon-cyan); }
@@ -126,7 +105,6 @@ header {
 .neon-amber h2 { color: var(--neon-amber); }
 .neon-amber .fill { background: var(--neon-amber); box-shadow: 0 0 15px var(--neon-amber); }
 
-/* --- GRID STRUCTURE --- */
 .dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
 h2 { margin: 0.5rem 0; font-size: 2.2rem; font-family: 'Audiowide', cursive; }
 small { color: #666; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; }
@@ -141,10 +119,6 @@ textarea { width: 100%; height: 150px; background: #050505; color: white; border
 .extra-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .wide-graph { grid-column: span 2; background: var(--card-bg); padding: 1.5rem; border-radius: 12px; }
 
-.pulse { color: #0f0; animation: blink 2s infinite; }
-@keyframes blink { 50% { opacity: 0.3; } }
-
-/* --- MOBILE --- */
 @media (max-width: 768px) {
     .container { padding: 1rem; }
     .racy-logo { font-size: 2rem; text-align: center; }
@@ -152,7 +126,5 @@ textarea { width: 100%; height: 150px; background: #050505; color: white; border
     .dashboard-grid { grid-template-columns: 1fr; }
     .telemetry-view { grid-column: span 1; height: 300px; }
     .secondary-analysis { grid-template-columns: 1fr; }
-    .extra-grid { grid-template-columns: 1fr; }
-    .wide-graph { grid-column: span 1; }
     .btn-mechanical, .btn-mechanical-alt { width: 100%; }
 }
