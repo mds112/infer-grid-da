@@ -1,3 +1,36 @@
+:root {
+    --bg-black: #01000f; 
+    --card-bg: rgba(30, 30, 45, 0.7); 
+    --neon-cyan: #00f2ff;
+    --neon-red: #ff3131; 
+    --neon-purple: #bc13fe;
+    --neon-amber: #ffb300;
+    --logo-red: #880000;
+    --logo-cyan-dim: #008899;
+}
+
+body {
+    background-color: var(--bg-black) !important;
+    background-image: radial-gradient(circle at center, #1e1e2e 0%, #01000f 100%) !important;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
+    min-height: 200vh;
+    overflow-x: hidden;
+}
+
+/* --- SHOOTING STAR CANVAS --- */
+#shooting-star-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* --- THE MECHANICAL BUTTON OVERHAUL --- */
 .btn-mechanical, .btn-mechanical-alt {
     background: #0a0a0a; 
     font-family: 'Audiowide', cursive; 
@@ -13,52 +46,4 @@
 }
 
 .btn-mechanical {
-    color: var(--neon-cyan);
-    border-color: rgba(0, 242, 255, 0.35);
-    box-shadow: 
-        0 8px 0 #006b72, 
-        0 12px 25px rgba(0, 242, 255, 0.5), 
-        0 0 60px rgba(0, 242, 255, 0.25),
-        inset 0 0 20px rgba(0, 242, 255, 0.07),
-        inset 0 1px 0 rgba(0, 242, 255, 0.2);
-    text-shadow: 0 0 12px var(--neon-cyan), 0 0 30px rgba(0, 242, 255, 0.6);
-}
-
-.btn-mechanical:hover {
-    background: #0d1a1a;
-    box-shadow: 
-        0 8px 0 #006b72, 
-        0 12px 35px rgba(0, 242, 255, 0.7), 
-        0 0 80px rgba(0, 242, 255, 0.4),
-        inset 0 0 30px rgba(0, 242, 255, 0.12),
-        inset 0 1px 0 rgba(0, 242, 255, 0.3);
-    text-shadow: 0 0 16px var(--neon-cyan), 0 0 50px rgba(0, 242, 255, 0.9);
-    border-color: rgba(0, 242, 255, 0.6);
-}
-
-.btn-mechanical:active {
-    transform: translateY(8px);
-    box-shadow: 0 0px 0 #006b72, 0 0 30px rgba(0, 242, 255, 0.9), inset 0 0 20px rgba(0, 242, 255, 0.15);
-    background: #050505;
-}
-
-.btn-mechanical-alt {
-    color: var(--neon-red);
-    border-color: rgba(255, 49, 49, 0.35);
-    box-shadow: 
-        0 8px 0 #600000, 
-        0 12px 25px rgba(255, 49, 49, 0.5), 
-        0 0 60px rgba(255, 49, 49, 0.25),
-        inset 0 0 20px rgba(255, 49, 49, 0.07),
-        inset 0 1px 0 rgba(255, 49, 49, 0.2);
-    text-shadow: 0 0 12px var(--neon-red), 0 0 30px rgba(255, 49, 49, 0.6);
-    width: 100%;
-}
-
-.btn-mechanical-alt:hover {
-    background: #1a0a0a;
-    box-shadow: 
-        0 8px 0 #600000, 
-        0 12px 35px rgba(255, 49, 49, 0.7), 
-        0 0 80px rgba(255, 49, 49, 0.4),
-        inset 0 0 30px rgba(255, 49, 49, 0
+    colo
