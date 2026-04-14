@@ -9,7 +9,6 @@
 </head>
 <body>
 
-    <!-- Shooting star canvas replaces the old .particle-container -->
     <canvas id="shooting-star-canvas"></canvas>
 
     <div class="container">
@@ -66,13 +65,13 @@
         <section class="secondary-analysis">
             <div class="text-block reveal">
                 <h3>Website Overview</h3>
-                <p>Infer Grid is a Data Analytics tool created with data tracking , inference and compilation in mind . The earliest intentions for this website were to be used an analytics tool in motorsports such as F1, Rally and such where a minute difference may prove to be Consequential and Imperative . Race Engineers can upload the vehicle data directly onto this platform to analyse it , compile it and even ask the platform to provide with an inference and suggest areas for improvement</p>
+                <p>Infer Grid is a Data Analytics tool created with data tracking, inference and compilation in mind. The earliest intentions for this website were to be used as an analytics tool in motorsports such as F1, Rally and such where a minute difference may prove to be consequential and imperative. Race Engineers can upload the vehicle data directly onto this platform to analyse it, compile it and even ask the platform to provide an inference and suggest areas for improvement.</p>
             </div>
 
-            <div class="card neon-cyan reveal">
-                <div class="card reveal"><small>Buffer</small><h3>14.2 GB/s</h3></div>
-                <div class="card reveal"><small>Drift</small><h3>-0.002ms</h3></div>
-                <div class="card reveal"><small>Packet</small><h3>0.00%</h3></div>
+            <div class="extra-grid">
+                <div class="card neon-cyan reveal"><small>Buffer</small><h3>14.2 GB/s</h3></div>
+                <div class="card neon-red reveal"><small>Drift</small><h3>-0.002ms</h3></div>
+                <div class="card neon-purple reveal"><small>Packet</small><h3>0.00%</h3></div>
             </div>
 
             <div class="wide-graph reveal">
@@ -91,6 +90,28 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ── Button smooth press ────────────────────────────────────────
+        document.querySelectorAll('.btn-mechanical, .btn-mechanical-alt').forEach(btn => {
+            const isCyan = btn.classList.contains('btn-mechanical');
+            const col = isCyan ? '0, 242, 255' : '255, 49, 49';
+            const shadowLight = isCyan ? '#00c8d4' : '#ff2222';
+            const shadowDark  = isCyan ? '#007a82' : '#7a0000';
+
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'translate(6px, 6px)';
+                btn.style.boxShadow = `0 0 20px rgba(${col}, 0.7), inset 0 0 10px rgba(${col}, 0.1)`;
+            });
+
+            const release = () => {
+                btn.style.transform = '';
+                btn.style.boxShadow = `4px 4px 0px ${shadowLight}, 6px 6px 0px ${shadowDark}, 8px 8px 20px rgba(${col}, 0.35), 0 0 18px rgba(${col}, 0.12), inset 0 0 12px rgba(${col}, 0.04)`;
+            };
+            btn.addEventListener('mouseup', release);
+            btn.addEventListener('mouseleave', release);
+            btn.addEventListener('touchstart', () => btn.dispatchEvent(new Event('mousedown')));
+            btn.addEventListener('touchend', release);
+        });
 
         // ── Shooting Star Canvas ───────────────────────────────────────
         (function () {
@@ -113,7 +134,6 @@
             resize();
             window.addEventListener('resize', resize);
 
-            // Scroll speed tracking
             let scrollSpeed = 0;
             let lastScrollY = window.scrollY;
             let lastScrollTime = performance.now();
@@ -148,7 +168,6 @@
                 requestAnimationFrame(animate);
                 ctx.clearRect(0, 0, W, H);
 
-                // Smoothly decay scroll speed and lerp multiplier
                 scrollSpeed *= 0.92;
                 const targetMultiplier = Math.max(1, 1 + scrollSpeed * 0.18);
                 smoothMultiplier += (targetMultiplier - smoothMultiplier) * 0.04;
@@ -158,13 +177,11 @@
                     s.x += spd;
                     s.y += Math.sin(s.angle) * spd * 0.3;
 
-                    // Reset when off screen
                     if (s.x > W + 50) {
                         s.x = -s.len - Math.random() * 200;
                         s.y = Math.random() * H;
                     }
 
-                    // Gradient tail
                     const tailX = s.x - s.len;
                     const grad = ctx.createLinearGradient(tailX, s.y, s.x, s.y);
                     grad.addColorStop(0, 'transparent');
@@ -173,7 +190,6 @@
 
                     ctx.save();
 
-                    // Main streak
                     ctx.globalAlpha = s.alpha;
                     ctx.shadowColor = s.col.shadow;
                     ctx.shadowBlur = 10 + smoothMultiplier * 4;
@@ -184,7 +200,6 @@
                     ctx.lineTo(s.x, s.y);
                     ctx.stroke();
 
-                    // Bright white hot-tip
                     ctx.shadowBlur = 18 + smoothMultiplier * 6;
                     ctx.lineWidth = s.width * 0.35;
                     ctx.strokeStyle = '#ffffff';
