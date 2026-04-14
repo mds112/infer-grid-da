@@ -9,6 +9,11 @@
     --logo-cyan-dim: #008899;
 }
 
+html {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--bg-black) !important;
     background-image: radial-gradient(circle at center, #1e1e2e 0%, #01000f 100%) !important;
@@ -19,14 +24,12 @@ body {
     overflow-x: hidden;
 }
 
-/* --- SHOOTING STAR CANVAS --- */
 #shooting-star-canvas {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
     z-index: 0; pointer-events: none;
 }
 
-/* --- PHYSICAL OFFSET BUTTONS WITH NEON GLOW --- */
 .btn-mechanical, .btn-mechanical-alt {
     background: transparent;
     font-family: 'Audiowide', cursive;
@@ -38,7 +41,6 @@ body {
     outline: none;
 }
 
-/* Cyan Neon Glow */
 .btn-mechanical {
     border-color: var(--neon-cyan);
     color: var(--neon-cyan);
@@ -58,7 +60,6 @@ body {
     transform: translate(4px, 4px);
 }
 
-/* Red Neon Glow */
 .btn-mechanical-alt {
     width: 100%;
     border-color: var(--neon-red);
@@ -79,26 +80,44 @@ body {
     transform: translate(4px, 4px);
 }
 
-/* --- REST OF THE LAYOUT (LOCKED) --- */
 .container { position: relative; z-index: 1; padding: 2rem; max-width: 1400px; margin: 0 auto; }
+
+/* Scroll Animation Styles */
+.reveal { 
+    opacity: 0; 
+    transform: translateY(30px); 
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out; 
+    will-change: transform, opacity;
+}
+.reveal.visible { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+
 header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 1rem; margin-bottom: 2rem; }
 .racy-logo { font-family: 'Audiowide', cursive; font-size: 3.5rem; color: var(--logo-red); text-shadow: 0 0 15px rgba(136, 0, 0, 0.4); text-transform: uppercase; }
 .racy-logo span { color: var(--logo-cyan-dim); text-shadow: 0 0 15px rgba(0, 136, 153, 0.4); }
 
 .dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
-.card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: 12px; transition: all 0.3s ease; }
-.card:hover { background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+
+/* Lag-free Card Style (Removed Backdrop-Filter) */
+.card { 
+    background: rgba(20, 20, 35, 0.95); 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    padding: 1.5rem; 
+    border-radius: 12px; 
+    transition: border 0.3s ease; 
+}
+.card:hover { 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+}
 
 .progress-bar { height: 8px; background: #000; border-radius: 4px; margin-top: 15px; border: 1px solid #111; }
 .fill { height: 100%; border-radius: 4px; }
-
-/* Neon Card Theming */
 .neon-cyan h2 { color: var(--neon-cyan); }
 .neon-cyan .fill { background: var(--neon-cyan); box-shadow: 0 0 15px var(--neon-cyan); }
 .neon-red h2 { color: var(--neon-red); }
 .neon-red .fill { background: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
-
-/* ADDED MISSING THEMES */
 .neon-purple h2 { color: var(--neon-purple); }
 .neon-purple .fill { background: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
 .neon-amber h2 { color: var(--neon-amber); }
