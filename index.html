@@ -65,13 +65,13 @@
         <section class="secondary-analysis">
             <div class="text-block reveal">
                 <h3>Website Overview</h3>
-                <p>Infer Grid is a Data Analytics tool created with data tracking, inference and compilation in mind. The earliest intentions for this website were to be used as an analytics tool in motorsports such as F1, Rally and such where a minute difference may prove to be consequential and imperative. Race Engineers can upload the vehicle data directly onto this platform to analyse it, compile it and even ask the platform to provide an inference and suggest areas for improvement.</p>
+                <p>Infer Grid is a Data Analytics tool created with data tracking , inference and compilation in mind . The earliest intentions for this website were to be used an analytics tool in motorsports such as F1, Rally and such where a minute difference may prove to be Consequential and Imperative . Race Engineers can upload the vehicle data directly onto this platform to analyse it , compile it and even ask the platform to provide with an inference and suggest areas for improvement</p>
             </div>
 
-            <div class="extra-grid">
-                <div class="card neon-cyan reveal"><small>Buffer</small><h3>14.2 GB/s</h3></div>
-                <div class="card neon-red reveal"><small>Drift</small><h3>-0.002ms</h3></div>
-                <div class="card neon-purple reveal"><small>Packet</small><h3>0.00%</h3></div>
+            <div class="card neon-cyan reveal">
+                <div class="card reveal"><small>Buffer</small><h3>14.2 GB/s</h3></div>
+                <div class="card reveal"><small>Drift</small><h3>-0.002ms</h3></div>
+                <div class="card reveal"><small>Packet</small><h3>0.00%</h3></div>
             </div>
 
             <div class="wide-graph reveal">
@@ -82,48 +82,28 @@
     </div>
 
     <script>
-        // ── Scroll Reveal ──────────────────────────────────────────────
+        // ── Scroll Reveal (Appear AND Disappear) ───────────────────────
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-                else entry.target.classList.remove('visible');
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible'); // Added disappear logic
+                }
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // ── Button smooth press ────────────────────────────────────────
-        document.querySelectorAll('.btn-mechanical, .btn-mechanical-alt').forEach(btn => {
-            const isCyan = btn.classList.contains('btn-mechanical');
-            const col = isCyan ? '0, 242, 255' : '255, 49, 49';
-            const shadowLight = isCyan ? '#00c8d4' : '#ff2222';
-            const shadowDark  = isCyan ? '#007a82' : '#7a0000';
-
-            btn.addEventListener('mousedown', () => {
-                btn.style.transform = 'translate(6px, 6px)';
-                btn.style.boxShadow = `0 0 20px rgba(${col}, 0.7), inset 0 0 10px rgba(${col}, 0.1)`;
-            });
-
-            const release = () => {
-                btn.style.transform = '';
-                btn.style.boxShadow = `4px 4px 0px ${shadowLight}, 6px 6px 0px ${shadowDark}, 8px 8px 20px rgba(${col}, 0.35), 0 0 18px rgba(${col}, 0.12), inset 0 0 12px rgba(${col}, 0.04)`;
-            };
-            btn.addEventListener('mouseup', release);
-            btn.addEventListener('mouseleave', release);
-            btn.addEventListener('touchstart', () => btn.dispatchEvent(new Event('mousedown')));
-            btn.addEventListener('touchend', release);
-        });
-
-        // ── Shooting Star Canvas ───────────────────────────────────────
+        // ── Shooting Star Canvas (Dark Blue Particles) ────────────────
         (function () {
             const canvas = document.getElementById('shooting-star-canvas');
             const ctx = canvas.getContext('2d');
 
+            // Restricted to Dark Blue shades
             const COLORS = [
-                { stroke: '#00f2ff', shadow: '#00f2ff' },
-                { stroke: '#ff3131', shadow: '#ff3131' },
-                { stroke: '#bc13fe', shadow: '#bc13fe' },
-                { stroke: '#00ff88', shadow: '#00ff88' },
-                { stroke: '#ffb300', shadow: '#ffb300' },
+                { stroke: '#00008b', shadow: '#0000ff' },
+                { stroke: '#0000CD', shadow: '#1e90ff' },
+                { stroke: '#191970', shadow: '#4169e1' }
             ];
 
             let W, H;
@@ -189,7 +169,6 @@
                     grad.addColorStop(1, s.col.stroke);
 
                     ctx.save();
-
                     ctx.globalAlpha = s.alpha;
                     ctx.shadowColor = s.col.shadow;
                     ctx.shadowBlur = 10 + smoothMultiplier * 4;
@@ -208,7 +187,6 @@
                     ctx.moveTo(s.x - s.len * 0.15, s.y);
                     ctx.lineTo(s.x, s.y);
                     ctx.stroke();
-
                     ctx.restore();
                 }
             }
