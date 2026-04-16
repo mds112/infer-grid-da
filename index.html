@@ -18,29 +18,29 @@
                 <p class="status">SYSTEM STATUS: <span class="pulse">ACTIVE</span></p>
             </div>
             <div class="nav-actions">
-                <button class="btn-mechanical">LOAD TELEMETRY</button>
+                <button class="btn-mechanical" id="load-telemetry-btn">LOAD TELEMETRY</button>
             </div>
         </header>
 
-        <main class="dashboard-grid">
-            <div class="card neon-cyan reveal">
+        <main class="dashboard-grid" id="dashboard-view">
+            <div class="card neon-cyan reveal" id="card-drag">
                 <small>Aero Load</small>
                 <h2>842 <span>kg/f</span></h2>
                 <div class="progress-bar"><div class="fill" style="width: 84%;"></div></div>
             </div>
-            <div class="card neon-red reveal">
-                <small>Thermal</small>
-                <h2>102<span>°C</span></h2>
+            <div class="card neon-red reveal" id="card-weight">
+                <small>Curb Weight</small>
+                <h2>102<span>kg</span></h2>
                 <div class="progress-bar"><div class="fill" style="width: 70%;"></div></div>
             </div>
-            <div class="card neon-purple reveal">
-                <small>Efficiency</small>
-                <h2>94<span>%</span></h2>
+            <div class="card neon-purple reveal" id="card-braking">
+                <small>Braking Latency</small>
+                <h2>94<span>ms</span></h2>
                 <div class="progress-bar"><div class="fill" style="width: 94%;"></div></div>
             </div>
-            <div class="card neon-amber reveal">
-                <small>Structural Stress</small>
-                <h2>LOW</h2>
+            <div class="card neon-amber reveal" id="card-efficiency">
+                <small>Efficiency</small>
+                <h2>25<span>%</span></h2>
                 <div class="progress-bar"><div class="fill" style="width: 25%;"></div></div>
             </div>
 
@@ -52,8 +52,7 @@
             <aside class="ai-sidebar reveal">
                 <h3>ENGINEER LOG</h3>
                 <div class="log-entries">
-                    <div class="log-entry">Mechanical displacement: 6px. Neon bleed: Active.</div>
-                    <div class="log-entry">Vector stream: Horizontal/60Hz.</div>
+                    <div class="log-entry">Waiting for telemetry initialization...</div>
                 </div>
                 <div class="input-area" style="margin-top: auto;">
                     <textarea placeholder="Ask the Race Engineer..."></textarea>
@@ -62,86 +61,135 @@
             </aside>
         </main>
 
+        <section id="form-view" style="display: none; max-width: 800px; margin: 0 auto;">
+            <div class="card neon-purple reveal visible" style="padding: 2.5rem;">
+                <h2 style="color: var(--neon-purple); margin-bottom: 2rem;">INITIALIZE CHASSIS</h2>
+                <form id="telemetry-form" class="futuristic-form">
+                    <div class="input-group">
+                        <small>CAR DESIGNATION</small>
+                        <input type="text" id="in-name" placeholder="E.G. V-SPEC 01" required>
+                    </div>
+                    <div class="form-grid">
+                        <div class="input-group">
+                            <small>AERO LOAD (0-1000 KG/F)</small>
+                            <input type="number" id="in-drag">
+                        </div>
+                        <div class="input-group">
+                            <small>CURB WEIGHT (0-1000 KG)</small>
+                            <input type="number" id="in-weight">
+                        </div>
+                        <div class="input-group">
+                            <small>BRAKING LATENCY (0-200 MS)</small>
+                            <input type="number" id="in-braking">
+                        </div>
+                        <div class="input-group">
+                            <small>EFFICIENCY (%)</small>
+                            <input type="number" id="in-efficiency" min="0" max="100">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 20px; margin-top: 30px;">
+                        <button type="submit" class="btn-mechanical" style="flex: 1;">SAVE DATA</button>
+                        <button type="button" id="abort-btn" class="btn-mechanical-alt" style="flex: 1;">ABORT</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
         <section class="secondary-analysis">
             <div class="text-block reveal">
                 <h3>Website Overview</h3>
-                <p>Infer Grid is a Data Analytics tool created with data tracking , inference and compilation in mind . 
-                  The earliest intentions for this website were to be used an analytics tool in motorsports such as F1,
-                  Rally and such where a minute difference may prove to be Consequential and Imperative . Race Engineers 
-                  can upload the vehicle data directly onto this platform to analyse it , compile it and even ask the 
-                  platform to provide with an inference and suggest areas for improvement</p>
-            </div>
-
-            <div class="card neon-cyan reveal">
-                <div class="card reveal"><small>Buffer</small><h3>14.2 GB/s</h3></div>
-                <div class="card reveal"><small>Drift</small><h3>-0.002ms</h3></div>
-                <div class="card reveal"><small>Packet</small><h3>0.00%</h3></div>
-            </div>
-
-            <div class="wide-graph reveal">
-                <div class="section-header"><h3>LATENCY DISTRIBUTION (TRACED)</h3></div>
-                <div class="graph-placeholder mini"></div>
+                <p>Infer Grid is a Data Analytics tool created with data tracking, inference, and compilation in mind...</p>
             </div>
         </section>
     </div>
 
     <script>
-        // Enhanced Intersection Observer
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15
-        };
+        const dashboard = document.getElementById('dashboard-view');
+        const formView = document.getElementById('form-view');
+        const loadBtn = document.getElementById('load-telemetry-btn');
+        const abortBtn = document.getElementById('abort-btn');
+
+        function toggleView(showForm) {
+            if (showForm) {
+                dashboard.style.display = 'none';
+                formView.style.display = 'block';
+                loadBtn.innerText = 'TO HOME';
+            } else {
+                formView.style.display = 'none';
+                dashboard.style.display = 'grid';
+                loadBtn.innerText = 'LOAD TELEMETRY';
+            }
+        }
+
+        loadBtn.addEventListener('click', () => {
+            const isDashboard = dashboard.style.display !== 'none';
+            toggleView(isDashboard);
+        });
+
+        abortBtn.addEventListener('click', () => toggleView(false));
+
+        document.getElementById('telemetry-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Configuration for data mapping and slider scaling
+            const fields = [
+                { id: 'in-drag', target: '#card-drag', unit: 'kg/f', max: 1000 },
+                { id: 'in-weight', target: '#card-weight', unit: 'kg', max: 1000 },
+                { id: 'in-braking', target: '#card-braking', unit: 'ms', max: 200 },
+                { id: 'in-efficiency', target: '#card-efficiency', unit: '%', max: 100 }
+            ];
+
+            fields.forEach(field => {
+                const val = document.getElementById(field.id).value;
+                const card = document.querySelector(field.target);
+                const h2 = card.querySelector('h2');
+                const fill = card.querySelector('.fill');
+
+                if(val) {
+                    h2.innerHTML = `${val}<span>${field.unit}</span>`;
+                    // Calculate percentage for the slider
+                    let percent = (val / field.max) * 100;
+                    if (percent > 100) percent = 100;
+                    if (percent < 0) percent = 0;
+                    fill.style.width = `${percent}%`;
+                } else {
+                    h2.innerHTML = `<span style="font-size: 1.2rem">DATA UNAVAILABLE</span>`;
+                    fill.style.width = `0%`;
+                }
+            });
+
+            toggleView(false);
+        });
 
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                } else {
-                    entry.target.classList.remove('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+                else entry.target.classList.remove('visible');
             });
-        }, observerOptions);
-
+        }, { threshold: 0.1 });
         document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-        // Shooting Star Canvas logic
         (function () {
             const canvas = document.getElementById('shooting-star-canvas');
             const ctx = canvas.getContext('2d');
-            const COLORS = [
-                { stroke: '#00008b', shadow: '#0000ff' },
-                { stroke: '#0000CD', shadow: '#1e90ff' },
-                { stroke: '#191970', shadow: '#4169e1' }
-            ];
-
+            const COLORS = [{ stroke: '#00008b', shadow: '#0000ff' }, { stroke: '#191970', shadow: '#4169e1' }];
             let W, H;
-            function resize() {
-                W = canvas.width = window.innerWidth;
-                H = canvas.height = window.innerHeight;
-            }
+            function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
             resize();
             window.addEventListener('resize', resize);
-
-            let stars = Array.from({ length: 40 }, () => ({
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                len: 80 + Math.random() * 100,
-                speed: 2 + Math.random() * 2,
+            const stars = Array.from({ length: 45 }, () => ({
+                x: Math.random() * W, y: Math.random() * H,
+                len: 100 + Math.random() * 100, speed: 2 + Math.random() * 3,
                 col: COLORS[Math.floor(Math.random() * COLORS.length)]
             }));
-
             function animate() {
                 ctx.clearRect(0, 0, W, H);
                 stars.forEach(s => {
                     s.x += s.speed;
-                    if (s.x > W) s.x = -s.len;
-                    ctx.strokeStyle = s.col.stroke;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(s.x, s.y);
-                    ctx.lineTo(s.x + s.len, s.y);
-                    ctx.stroke();
+                    if (s.x > W + 100) s.x = -s.len;
+                    ctx.shadowBlur = 10; ctx.shadowColor = s.col.shadow;
+                    ctx.strokeStyle = s.col.stroke; ctx.beginPath();
+                    ctx.moveTo(s.x, s.y); ctx.lineTo(s.x + s.len, s.y); ctx.stroke();
                 });
                 requestAnimationFrame(animate);
             }
